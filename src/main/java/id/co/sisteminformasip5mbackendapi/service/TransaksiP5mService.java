@@ -9,4 +9,6 @@ public interface TransaksiP5mService {
      String editP5m(Map<String, Object> data);
      String getRiwayatP5m(Map<String, Object> data);
      String getCetakP5m(Map<String, Object> data);
+
+     String deleteP5mRecords(Map<String, Object> data);
 }

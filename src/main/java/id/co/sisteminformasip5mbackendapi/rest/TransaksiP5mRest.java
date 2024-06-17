@@ -1,6 +1,7 @@
 package id.co.sisteminformasip5mbackendapi.rest;
 
 import id.co.sisteminformasip5mbackendapi.config.EncodeData;
+import id.co.sisteminformasip5mbackendapi.repository.PolmanAstraRepository;
 import id.co.sisteminformasip5mbackendapi.service.TransaksiP5mService;
 import org.springframework.aop.scope.ScopedProxyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,14 +43,26 @@ public class TransaksiP5mRest {
     }
 
     @PostMapping("/EditP5m")
-    public ResponseEntity<String> editP5m(@RequestBody Map<String, Object> data) {
-        System.out.println("Received data: " + data);
-
+    public ResponseEntity<String> editP5m(@RequestBody List<Map<String, Object>> dataList) {
         try {
-            Map<String, Object> encodedData = encodeData.htmlEncodeObject(data);
-            String result = transaksiP5mService.editP5m(encodedData);
-            return ResponseEntity.ok().body(result);
+            // Construct encodedDataDel with "kelas" and "currentdate"
+            String kelas = (String) dataList.get(0).get("p1"); // Assuming "p1" is a String
+            String currentDate = LocalDate.now().toString(); // Get current date in ISO format (yyyy-MM-dd)
+
+            Map<String, Object> encodedDataDel = new HashMap<>();
+            encodedDataDel.put("p1", kelas);
+            encodedDataDel.put("currentdate", currentDate);
+
+            // Call deleteP5mRecords with encodedDataDel
+            transaksiP5mService.deleteP5mRecords(encodedDataDel);
+
+            for (Map<String, Object> data : dataList) {
+                Map<String, Object> encodedData = encodeData.htmlEncodeObject(data);
+                transaksiP5mService.editP5m(encodedData);
+            }
+            return ResponseEntity.ok().body("All data processed successfully");
         } catch (Exception e) {
+            //logger.error("Failed to create data", e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to create data", e);
         }
     }

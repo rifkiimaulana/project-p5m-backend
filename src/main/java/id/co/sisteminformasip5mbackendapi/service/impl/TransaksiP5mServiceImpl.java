@@ -23,7 +23,6 @@ public class TransaksiP5mServiceImpl implements TransaksiP5mService {
         for (Map.Entry<String, Object> entry : data.entrySet()) {
             dataList.add(entry.getValue().toString());
         }
-        System.out.println(dataList.toArray(new String[0]));
 
         return polmanAstraRepository.callProcedure("p5m_createP5m", dataList.toArray(new String[0]));
 
@@ -36,7 +35,10 @@ public class TransaksiP5mServiceImpl implements TransaksiP5mService {
             dataList.add(entry.getValue().toString());
         }
 
-        return polmanAstraRepository.callProcedure("p5m_editP5m", dataList.toArray(new String[0]));
+        System.out.println("dataList");
+        System.out.println(dataList);
+
+        return polmanAstraRepository.callProcedure("p5m_createP5m", dataList.toArray(new String[0]));
 
     }
     
@@ -66,5 +68,19 @@ public class TransaksiP5mServiceImpl implements TransaksiP5mService {
         System.out.println("Result: " + result);
 
         return result;
+    }
+
+    @Override
+    public String deleteP5mRecords(Map<String, Object> data) {
+        List<String> dataList = new ArrayList<>();
+        for (Map.Entry<String, Object> entry : data.entrySet()) {
+            dataList.add(entry.getValue().toString());
+        }
+
+        System.out.println("deleteP5mRecords");
+        System.out.println(dataList);
+        System.out.println("deleteP5mRecords");
+
+        return polmanAstraRepository.callProcedure("p5m_DeleteP5mRecords", dataList.toArray(new String[0]));
     }
 }

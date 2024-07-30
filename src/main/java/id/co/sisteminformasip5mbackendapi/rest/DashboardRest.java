@@ -23,11 +23,11 @@ public class DashboardRest {
     @Autowired
     private EncodeData encodeData;
 
-    @PostMapping("/grafikbar")
+    @PostMapping("/cardKelas")
     public ResponseEntity<String> getBarChartData(@RequestBody Map<String, Object> data) {
         try {
             Map<String, Object> encodedData = encodeData.htmlEncodeObject(data);
-            String result = dashboardService.getBarChartData(encodedData);
+            String result = dashboardService.getCardKelas(encodedData);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to get bar chart data", e);
@@ -45,4 +45,27 @@ public class DashboardRest {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to get top 3 mahasiswa melanggar: ", e);
         }
     }
+
+    @PostMapping("/melanggarHariIni")
+    public ResponseEntity<String> getTop3MahasiswaMelanggarHariIni(@RequestBody Map<String, Object> data) {
+        try {
+            Map<String, Object> encodedData = encodeData.htmlEncodeObject(data);
+            String  result = dashboardService.getTop3MahasiswaMelanggarHariIni(encodedData);
+            return ResponseEntity.ok().body(result);
+
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to get top 3 mahasiswa melanggar: ", e);
+        }
+    }
+    @PostMapping("/grafikbarpelanggaran")
+    public ResponseEntity<String> getBarChartDataPelanggaran(@RequestBody Map<String, Object> data) {
+        try {
+            Map<String, Object> encodedData = encodeData.htmlEncodeObject(data);
+            String result = dashboardService.getBarChartDataPelanggaran(encodedData);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to get bar chart data Pelanggaran", e);
+        }
+    }
+
 }

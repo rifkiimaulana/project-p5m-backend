@@ -14,8 +14,38 @@ import java.util.Map;
 public class DashboardServiceImpl implements DashboardService {
     @Autowired
     private PolmanAstraRepository polmanAstraRepository;
+
     @Override
-    public String getBarChartData(Map<String, Object> data) {
+    public String getCardKelas(Map<String, Object> data) {
+        List<String> dataList = new ArrayList<>();
+        for (Map.Entry<String, Object> entry : data.entrySet()) {
+            dataList.add(entry.getValue().toString());
+        }
+        String result = polmanAstraRepository.callProcedure("p5m_getCardKelas", dataList.toArray(new String[0]));
+        return result;
+    }
+    @Override
+    public String getTop3MahasiswaMelanggar(Map<String, Object> data) {
+        List<String> dataList = new ArrayList<>();
+        for (Map.Entry<String, Object> entry : data.entrySet()) {
+            dataList.add(entry.getValue().toString());
+        }
+        String result = polmanAstraRepository.callProcedure("p5m_getTop3MahasiswaMelanggar", dataList.toArray(new String[0]));
+        return result;
+    }
+
+    @Override
+    public String getTop3MahasiswaMelanggarHariIni(Map<String, Object> data) {
+        List<String> dataList = new ArrayList<>();
+        for (Map.Entry<String, Object> entry : data.entrySet()) {
+            dataList.add(entry.getValue().toString());
+        }
+        String result = polmanAstraRepository.callProcedure("p5m_getTop3MahasiswaMelanggarHariIni", dataList.toArray(new String[0]));
+        return result;
+    }
+
+    @Override
+    public String getBarChartDataPelanggaran(Map<String, Object> data) {
         try {
             String startDate = data.get("startDate").toString();
             String endDate = data.get("endDate").toString();
@@ -28,16 +58,7 @@ public class DashboardServiceImpl implements DashboardService {
         for (Map.Entry<String, Object> entry : data.entrySet()) {
             dataList.add(entry.getValue().toString());
         }
-        String result = polmanAstraRepository.callProcedure("p5m_getBarChartData", dataList.toArray(new String[0]));
-        return result;
-    }
-    @Override
-    public String getTop3MahasiswaMelanggar(Map<String, Object> data) {
-        List<String> dataList = new ArrayList<>();
-        for (Map.Entry<String, Object> entry : data.entrySet()) {
-            dataList.add(entry.getValue().toString());
-        }
-        String result = polmanAstraRepository.callProcedure("p5m_getTop3MahasiswaMelanggar", dataList.toArray(new String[0]));
+        String result = polmanAstraRepository.callProcedure ("p5m_getBarChartDataPelanggaran", dataList.toArray(new String[0]));
         return result;
     }
 

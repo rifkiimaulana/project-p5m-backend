@@ -86,14 +86,14 @@ public class UtilitiesRest {
 //        }
 //    }
 //
-//    @PostMapping("/GetListKaryawan")
-//    public ResponseEntity<String> getListKaryawan(@RequestBody Map<String, Object> data) {
-//        try {
-//            Map<String, Object> encodedData = encodeData.htmlEncodeObject(data);
-//            String result = utilitiesService.getListKaryawan(encodedData);
-//            return ResponseEntity.ok().body(result);
-//        } catch (Exception e) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to get list karyawan", e);
-//        }
-//    }
+    @PostMapping("/LoginByPic")
+    public ResponseEntity<String> loginByPic(@RequestBody Map<String, Object> data) {
+        try {
+            Map<String, Object> encodedData = encodeData.htmlEncodeObject(data);
+            String result = utilitiesService.loginByPic(encodedData);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to get list karyawan", e);
+        }
+    }
 }

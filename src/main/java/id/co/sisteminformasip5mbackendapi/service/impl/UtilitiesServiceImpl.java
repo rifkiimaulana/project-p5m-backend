@@ -79,13 +79,23 @@ public class UtilitiesServiceImpl implements UtilitiesService {
         return result;
     }
 
+//    @Override
+//    public String getListKaryawan(Map<String, Object> data) {
+//        List<String> dataList = new ArrayList<>();
+//        for (Map.Entry<String, Object> entry : data.entrySet()) {
+//            dataList.add(entry.getValue().toString());
+//        }
+//        String result = polmanAstraRepository.callProcedure("pro_getListKaryawan", dataList.toArray(new String[0]));
+//        return result;
+//    }
     @Override
-    public String getListKaryawan(Map<String, Object> data) {
+    public String loginByPic(Map<String, Object> data) {
         List<String> dataList = new ArrayList<>();
         for (Map.Entry<String, Object> entry : data.entrySet()) {
             dataList.add(entry.getValue().toString());
         }
-        String result = polmanAstraRepository.callProcedure("pro_getListKaryawan", dataList.toArray(new String[0]));
+        String result = polmanAstraRepository.callProcedure("p5m_loginByPICAndKelas", dataList.toArray(new String[0]));
         return result;
     }
+
 }
